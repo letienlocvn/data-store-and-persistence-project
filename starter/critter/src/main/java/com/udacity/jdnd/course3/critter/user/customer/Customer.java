@@ -19,6 +19,6 @@ import java.util.List;
 public class Customer extends User {
     private String phoneNumber;
     private String notes;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany
     private List<Pet> pets;
 }

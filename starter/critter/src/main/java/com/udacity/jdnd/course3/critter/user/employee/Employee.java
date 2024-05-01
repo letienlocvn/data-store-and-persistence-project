@@ -22,11 +22,7 @@ public class Employee extends User {
     @Column(name = "employee_skill")
     private EmployeeSkill skills;
 
-    @ManyToMany
-    @JoinTable(name = "employee_schedule",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "schedule_id")
-    )
-    private Set<Schedule> schedules;
+    @ManyToMany(mappedBy = "employees")
+    private Set<Schedule> schedule = new HashSet<>();
 
 }

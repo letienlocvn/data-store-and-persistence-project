@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,11 +31,7 @@ public class Pet {
     private LocalDate birthDate;
     private String notes;
 
-    @ManyToMany
-    @JoinTable(name = "pet_schedule",
-            joinColumns = @JoinColumn(name = "pet_id"),
-            inverseJoinColumns = @JoinColumn(name = "schedule_id")
-    )
-    private List<Schedule> schedules;
+    @ManyToMany(mappedBy = "pets")
+    private List<Schedule> schedule = new ArrayList<>();
 
 }

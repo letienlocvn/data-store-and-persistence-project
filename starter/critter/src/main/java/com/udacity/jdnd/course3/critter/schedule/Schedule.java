@@ -22,10 +22,18 @@ public class Schedule {
     @GeneratedValue
     private Long id;
 
-    @ManyToMany(mappedBy = "schedule")
+    @ManyToMany
+    @JoinTable(name = "employee_schedule",
+            joinColumns = {@JoinColumn(name = "employee_id")},
+            inverseJoinColumns = {@JoinColumn(name = "schedule_id")}
+    )
     private List<Employee> employees;
 
-    @ManyToMany(mappedBy = "schedule")
+    @ManyToMany
+    @JoinTable(name = "pet_schedule",
+            joinColumns = {@JoinColumn(name = "pet_id")},
+            inverseJoinColumns = {@JoinColumn(name = "schedule_id")}
+    )
     private List<Pet> pets;
     private LocalDate date;
 
