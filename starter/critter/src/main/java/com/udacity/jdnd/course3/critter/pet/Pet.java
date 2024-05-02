@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,16 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Pet {
     @Id
     @GeneratedValue
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
     private PetType type;
+
+    @Nationalized
     private String name;
 
     @ManyToOne
@@ -30,8 +32,5 @@ public class Pet {
     private Customer customer;
     private LocalDate birthDate;
     private String notes;
-
-    @ManyToMany(mappedBy = "pets")
-    private List<Schedule> schedule = new ArrayList<>();
 
 }

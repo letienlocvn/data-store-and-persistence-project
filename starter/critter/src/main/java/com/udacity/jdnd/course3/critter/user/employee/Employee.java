@@ -22,7 +22,6 @@ public class Employee extends User {
     @Enumerated
     private Set<EmployeeSkill> skills;
 
-    // @ManyToMany(mappedBy = "employees")
     @ElementCollection
     @Enumerated
     private Set<DayOfWeek> daysAvailable;

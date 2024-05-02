@@ -11,6 +11,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -37,7 +38,7 @@ public class Schedule {
     private List<Pet> pets;
     private LocalDate date;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "employee_skill")
-    private EmployeeSkill activities;
+    @ElementCollection
+    @Enumerated
+    private Set<EmployeeSkill> activities;
 }
