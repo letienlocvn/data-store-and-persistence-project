@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.time.DayOfWeek;
 import java.util.Set;
 
 @Entity
@@ -18,11 +18,13 @@ import java.util.Set;
 @AllArgsConstructor
 public class Employee extends User {
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "employee_skill")
-    private EmployeeSkill skills;
+    @ElementCollection
+    @Enumerated
+    private Set<EmployeeSkill> skills;
 
-    @ManyToMany(mappedBy = "employees")
-    private Set<Schedule> schedule = new HashSet<>();
+    // @ManyToMany(mappedBy = "employees")
+    @ElementCollection
+    @Enumerated
+    private Set<DayOfWeek> daysAvailable;
 
 }

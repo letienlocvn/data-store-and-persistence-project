@@ -21,14 +21,15 @@ public class CustomerService {
         // Mapping to entity
         Customer entityCustomer = modelMapper.map(customerDTO, Customer.class);
 
-        Customer customer = customerRepository.findById(customerDTO.getId()).orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerDTO.getId()));
-        if (customer != null) {
-            // Update later
-            // customer.setName(customerDTO.getName());
-            return modelMapper.map(customerRepository.save(customer), CustomerDTO.class);
-        } else {
-            // Save new customer
-            return modelMapper.map(customerRepository.save(entityCustomer), CustomerDTO.class);
-        }
+        return modelMapper.map(customerRepository.save(entityCustomer), CustomerDTO.class);
+
+        // Customer customer = customerRepository.findById(customerDTO.getId()).orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerDTO.getId()));
+//        if (customer != null) {
+//            // Update later
+//            // customer.setName(customerDTO.getName());
+//            return modelMapper.map(customerRepository.save(customer), CustomerDTO.class);
+//        } else {
+//            // Save new customer
+//        }
     }
 }
