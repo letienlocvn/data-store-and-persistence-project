@@ -1,12 +1,14 @@
 package com.udacity.jdnd.course3.critter.user.employee;
 
 import com.udacity.jdnd.course3.critter.exception.ResourceNotFoundException;
-import com.udacity.jdnd.course3.critter.schedule.Schedule;
+import com.udacity.jdnd.course3.critter.schedule.ScheduleRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -14,6 +16,9 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private ScheduleRepository scheduleRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -28,4 +33,25 @@ public class EmployeeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", employeeId));
         employee.setDaysAvailable(daysAvailable);
     }
+
+    public List<EmployeeDTO> findEmployeesWithRightSkillAreAvailable(EmployeeRequestDTO employeeDTO) {
+        // Find employee available on that day
+        List<Employee> employees = employeeRepository.findEmployeesByDaysAvailable(employeeDTO.getDate());
+        List<Employee> employeesWithRightSkill = new ArrayList<>();
+        List<EmployeeDTO> employeesWithRightSkillConvertDTO = new ArrayList<>();
+
+        // Check database
+        for (Employee employee : employees) {
+            employee.setSkills(employeeDTO.getSkills());
+            employeesWithRightSkill.add(employee);
+        }
+
+        employeesWithRightSkill.forEach(employee ->
+                employeesWithRightSkillConvertDTO
+                        .add(modelMapper.map(employee, EmployeeDTO.class)));
+
+
+        return employeesWithRightSkillConvertDTO;
+    }
+
 }
