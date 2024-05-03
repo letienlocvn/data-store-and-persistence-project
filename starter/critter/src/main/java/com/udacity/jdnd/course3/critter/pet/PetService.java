@@ -3,12 +3,12 @@ package com.udacity.jdnd.course3.critter.pet;
 import com.udacity.jdnd.course3.critter.exception.ResourceNotFoundException;
 import com.udacity.jdnd.course3.critter.user.customer.Customer;
 import com.udacity.jdnd.course3.critter.user.customer.CustomerRepository;
-import com.udacity.jdnd.course3.critter.user.employee.Employee;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -56,4 +56,26 @@ public class PetService {
     public List<Pet> findAllById(List<Long> petIds) {
         return petRepository.findAllById(petIds);
     }
+
+    public List<PetDTO> findAllPets() {
+        List<PetDTO> petDTOS = new ArrayList<>();
+        Iterable<Pet> pets = petRepository.findAll();
+        pets.forEach(pet -> {
+            PetDTO petDTO = mapToDTO(pet);
+            petDTOS.add(petDTO);
+        });
+        return petDTOS;
+    }
+
+    public List<PetDTO> findPetsByOwner(long ownerId) {
+        List<PetDTO> petDTOS = new ArrayList<>();
+        List<Pet> pets = petRepository.getPetsByCustomer_Id(ownerId);
+        pets.forEach(pet -> {
+            PetDTO petDTO = mapToDTO(pet);
+            petDTOS.add(petDTO);
+        });
+        return petDTOS;
+    }
+
+
 }

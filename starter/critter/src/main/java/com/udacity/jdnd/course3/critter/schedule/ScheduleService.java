@@ -62,8 +62,6 @@ public class ScheduleService {
     }
 
     public List<ScheduleDTO> findScheduleForCustomer(long customerId) {
-        // Create new Schedule
-
         // Find all pet has customer id.
         List<Pet> pets = petRepository.getPetsByCustomer_Id(customerId);
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();

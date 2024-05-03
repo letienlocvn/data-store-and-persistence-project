@@ -35,12 +35,12 @@ public class UserController {
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers(){
-        throw new UnsupportedOperationException();
+        return customerService.findAllCustomers();
     }
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId){
-        throw new UnsupportedOperationException();
+        return customerService.findCustomerByPet(petId);
     }
 
     @PostMapping("/employee")
@@ -56,7 +56,6 @@ public class UserController {
     @PutMapping("/employee/{employeeId}")
     public void setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long employeeId) {
         employeeService.updateActivities(employeeId, daysAvailable);
-        // throw new UnsupportedOperationException();
     }
 
     @GetMapping("/employee/availability")
