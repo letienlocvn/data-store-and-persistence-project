@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +61,24 @@ public class ScheduleService {
         return schedules.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
+    public List<ScheduleDTO> findScheduleForCustomer(long customerId) {
+        // Create new Schedule
+
+        // Find all pet has customer id.
+        List<Pet> pets = petRepository.getPetsByCustomer_Id(customerId);
+        List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
+        pets.forEach(pet -> {
+            Pet petEntity = petRepository.findById(pet.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Pet", "id", pet.getId()));
+            List<Schedule> schedules = scheduleRepository.getSchedulesByPetsContains(petEntity);
+            schedules.forEach(schedule -> {
+                ScheduleDTO scheduleDTO = mapToDTO(schedule);
+                scheduleDTOS.add(scheduleDTO);
+            });
+        });
+        return scheduleDTOS;
+    }
+
     private Schedule mapToEntity(ScheduleDTO scheduleDTO,
                                  List<Employee> employees,
                                  List<Pet> pets) {
@@ -89,4 +108,6 @@ public class ScheduleService {
         return schedules.stream()
                 .map(this::mapToDTO).collect(Collectors.toList());
     }
+
+
 }
