@@ -3,10 +3,13 @@ package com.udacity.jdnd.course3.critter.pet;
 import com.udacity.jdnd.course3.critter.exception.ResourceNotFoundException;
 import com.udacity.jdnd.course3.critter.user.customer.Customer;
 import com.udacity.jdnd.course3.critter.user.customer.CustomerRepository;
+import com.udacity.jdnd.course3.critter.user.employee.Employee;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PetService {
@@ -28,22 +31,16 @@ public class PetService {
 
         pet.setCustomer(customer);
 
-        return convertPetToPetDTO(petRepository.save(pet));
+        return mapToDTO(petRepository.save(pet));
     }
 
-    // Other solution: Using BeanUtils to copy
-    private PetDTO convertPetToPetDTO(Pet pet) {
+    private PetDTO mapToDTO(Pet pet) {
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(pet, petDTO);
         if (pet.getCustomer() != null) {
             petDTO.setOwnerId(pet.getCustomer().getId());
         }
         return petDTO;
-    }
-
-    // This solution: Not work - Because pet cannot set OwnerId of customer
-    private PetDTO mapToDTO(Pet pet) {
-        return modelMapper.map(pet, PetDTO.class);
     }
 
     private Pet mapToEntity(PetDTO petDTO) {
@@ -54,5 +51,9 @@ public class PetService {
         Pet pet = petRepository.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet", "Id", petId));
         return modelMapper.map(pet, PetDTO.class);
+    }
+
+    public List<Pet> findAllById(List<Long> petIds) {
+        return petRepository.findAllById(petIds);
     }
 }

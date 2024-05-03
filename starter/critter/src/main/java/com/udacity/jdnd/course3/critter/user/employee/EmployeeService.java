@@ -67,4 +67,8 @@ public class EmployeeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", employeeId));
         return modelMapper.map(employee, EmployeeDTO.class);
     }
+
+    public List<Employee> findAllById(List<Long> employeeIds) {
+        return employeeRepository.findAllById(employeeIds);
+    }
 }
