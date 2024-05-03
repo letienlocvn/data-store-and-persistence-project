@@ -31,9 +31,9 @@ public class PetService {
         return convertPetToPetDTO(petRepository.save(pet));
     }
 
+    // Other solution: Using BeanUtils to copy
     private PetDTO convertPetToPetDTO(Pet pet) {
         PetDTO petDTO = new PetDTO();
-        // in order for copyProperties to work, properties of the DTO and normal object must match in name
         BeanUtils.copyProperties(pet, petDTO);
         if (pet.getCustomer() != null) {
             petDTO.setOwnerId(pet.getCustomer().getId());
@@ -41,7 +41,7 @@ public class PetService {
         return petDTO;
     }
 
-    // This solution: Not work - Because I cannot set OwnerId of customer
+    // This solution: Not work - Because pet cannot set OwnerId of customer
     private PetDTO mapToDTO(Pet pet) {
         return modelMapper.map(pet, PetDTO.class);
     }
