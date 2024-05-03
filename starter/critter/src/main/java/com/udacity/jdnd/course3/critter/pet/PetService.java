@@ -49,4 +49,10 @@ public class PetService {
     private Pet mapToEntity(PetDTO petDTO) {
         return modelMapper.map(petDTO, Pet.class);
     }
+
+    public PetDTO findPet(long petId) {
+        Pet pet = petRepository.findById(petId)
+                .orElseThrow(() -> new ResourceNotFoundException("Pet", "Id", petId));
+        return modelMapper.map(pet, PetDTO.class);
+    }
 }

@@ -48,7 +48,7 @@ public class EmployeeService {
         List<EmployeeDTO> employeesWithRightSkillConvertDTO = new ArrayList<>();
 
         employees.forEach(employee -> employeesWithRightSkillConvertDTO
-                        .add(modelMapper.map(employee, EmployeeDTO.class)));
+                .add(modelMapper.map(employee, EmployeeDTO.class)));
 
 
         return employeesWithRightSkillConvertDTO;
@@ -62,4 +62,9 @@ public class EmployeeService {
         return modelMapper.map(employeeDTO, Employee.class);
     }
 
+    public EmployeeDTO findEmployee(long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", employeeId));
+        return modelMapper.map(employee, EmployeeDTO.class);
+    }
 }

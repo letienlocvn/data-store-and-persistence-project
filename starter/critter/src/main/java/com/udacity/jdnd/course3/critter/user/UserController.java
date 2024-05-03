@@ -50,7 +50,7 @@ public class UserController {
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        return employeeService.findEmployee(employeeId);
     }
 
     @PutMapping("/employee/{employeeId}")
