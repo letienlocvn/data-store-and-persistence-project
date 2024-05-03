@@ -22,7 +22,7 @@ public class ScheduleController {
 
     @GetMapping
     public List<ScheduleDTO> getAllSchedules() {
-        throw new UnsupportedOperationException();
+        return scheduleService.getAllSchedules();
     }
 
     @GetMapping("/pet/{petId}")

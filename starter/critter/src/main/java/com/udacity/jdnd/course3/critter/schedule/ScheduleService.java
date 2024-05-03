@@ -1,10 +1,13 @@
 package com.udacity.jdnd.course3.critter.schedule;
 
+import com.udacity.jdnd.course3.critter.exception.ResourceNotFoundException;
 import com.udacity.jdnd.course3.critter.pet.Pet;
+import com.udacity.jdnd.course3.critter.pet.PetRepository;
 import com.udacity.jdnd.course3.critter.pet.PetService;
 import com.udacity.jdnd.course3.critter.user.User;
 import com.udacity.jdnd.course3.critter.user.employee.Employee;
 import com.udacity.jdnd.course3.critter.user.employee.EmployeeDTO;
+import com.udacity.jdnd.course3.critter.user.employee.EmployeeRepository;
 import com.udacity.jdnd.course3.critter.user.employee.EmployeeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,11 @@ public class ScheduleService {
     private ScheduleRepository scheduleRepository;
 
     @Autowired
-    private ModelMapper mapper;
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private PetRepository petRepository;
+
 
     public ScheduleDTO createSchedule(ScheduleDTO scheduleDTO) {
         List<Employee> employees = employeeService.findAllById(scheduleDTO.getEmployeeIds());
@@ -38,8 +45,19 @@ public class ScheduleService {
     }
 
     public List<ScheduleDTO> findScheduleForEmployee(long employeeId) {
-        EmployeeDTO employeeDTO = employeeService.findEmployee(employeeId);
-        return null;
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", employeeId));
+        List<Schedule> schedules = scheduleRepository.getSchedulesByEmployeesContains(employee);
+
+        return schedules.stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
+
+    public List<ScheduleDTO> findScheduleForPet(long petId) {
+        Pet pet = petRepository.findById(petId)
+                .orElseThrow(() -> new ResourceNotFoundException("Pet", "id", petId));
+        List<Schedule> schedules = scheduleRepository.getSchedulesByPetsContains(pet);
+
+        return schedules.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
     private Schedule mapToEntity(ScheduleDTO scheduleDTO,
@@ -64,5 +82,11 @@ public class ScheduleService {
         scheduleDTO.setDate(schedule.getDate());
 
         return scheduleDTO;
+    }
+
+    public List<ScheduleDTO> getAllSchedules() {
+        List<Schedule> schedules = scheduleRepository.findAll();
+        return schedules.stream()
+                .map(this::mapToDTO).collect(Collectors.toList());
     }
 }
