@@ -24,19 +24,18 @@ public class CustomerService {
     private ModelMapper modelMapper;
 
     public CustomerDTO createCustomer(CustomerDTO customerDTO) {
-        // Mapping to entity
-        Customer entityCustomer = modelMapper.map(customerDTO, Customer.class);
-
-        return modelMapper.map(customerRepository.save(entityCustomer), CustomerDTO.class);
-
-        // Customer customer = customerRepository.findById(customerDTO.getId()).orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerDTO.getId()));
-//        if (customer != null) {
-//            // Update later
-//            // customer.setName(customerDTO.getName());
-//            return modelMapper.map(customerRepository.save(customer), CustomerDTO.class);
-//        } else {
-//            // Save new customer
-//        }
+        List<Pet> pets = new ArrayList<>();
+        if (customerDTO.getPetIds() != null
+                && !customerDTO.getPetIds().isEmpty()) {
+            pets = customerDTO.getPetIds()
+                    .stream()
+                    .map(petId -> petRepository.getOne(petId))
+                    .collect(Collectors.toList());
+        }
+        Customer customer = mapToEntity(customerDTO);
+        customer.setPets(pets);
+        customerRepository.save(customer);
+        return mapToDTO(customer);
     }
 
     public List<CustomerDTO> findAllCustomers() {
@@ -50,10 +49,9 @@ public class CustomerService {
     }
 
     public CustomerDTO findCustomerByPet(long petId) {
-        Pet pet = petRepository.findById(petId)
-                .orElseThrow(() -> new ResourceNotFoundException("Pet", "id", petId));
-        Customer customer = customerRepository.getCustomerByPetsContains(pet);
-
+        Customer customer = petRepository.findById(petId)
+                .orElseThrow(() -> new ResourceNotFoundException("Pet", "id", petId)).getCustomer();
+        // Customer customer = petRepository.getOne(petId).getCustomer();
         return mapToDTO(customer);
     }
 

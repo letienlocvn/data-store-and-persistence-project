@@ -30,6 +30,8 @@ public class PetService {
         Pet pet = mapToEntity(petDTO);
 
         pet.setCustomer(customer);
+        customer.getPets().add(pet);
+        customerRepository.save(customer);
 
         return mapToDTO(petRepository.save(pet));
     }
