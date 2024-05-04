@@ -7,11 +7,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class CustomerService {
 
     @Autowired
@@ -50,7 +52,6 @@ public class CustomerService {
     public CustomerDTO findCustomerByPet(long petId) {
         Customer customer = petRepository.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet", "id", petId)).getCustomer();
-        // Customer customer = petRepository.getOne(petId).getCustomer();
         return mapToDTO(customer);
     }
 

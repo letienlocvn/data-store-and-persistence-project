@@ -4,20 +4,19 @@ import com.udacity.jdnd.course3.critter.exception.ResourceNotFoundException;
 import com.udacity.jdnd.course3.critter.pet.Pet;
 import com.udacity.jdnd.course3.critter.pet.PetRepository;
 import com.udacity.jdnd.course3.critter.pet.PetService;
-import com.udacity.jdnd.course3.critter.user.User;
 import com.udacity.jdnd.course3.critter.user.employee.Employee;
-import com.udacity.jdnd.course3.critter.user.employee.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.user.employee.EmployeeRepository;
 import com.udacity.jdnd.course3.critter.user.employee.EmployeeService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ScheduleService {
 
     @Autowired
