@@ -1,8 +1,11 @@
-package com.udacity.jdnd.course3.critter.user.customer;
+package com.udacity.jdnd.course3.critter.services;
 
+import com.udacity.jdnd.course3.critter.entities.Customer;
 import com.udacity.jdnd.course3.critter.exception.ResourceNotFoundException;
-import com.udacity.jdnd.course3.critter.pet.Pet;
-import com.udacity.jdnd.course3.critter.pet.PetRepository;
+import com.udacity.jdnd.course3.critter.entities.Pet;
+import com.udacity.jdnd.course3.critter.repositories.CustomerRepository;
+import com.udacity.jdnd.course3.critter.repositories.PetRepository;
+import com.udacity.jdnd.course3.critter.dtos.CustomerDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

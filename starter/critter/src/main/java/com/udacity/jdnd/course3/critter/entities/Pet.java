@@ -1,6 +1,6 @@
-package com.udacity.jdnd.course3.critter.pet;
+package com.udacity.jdnd.course3.critter.entities;
 
-import com.udacity.jdnd.course3.critter.user.customer.Customer;
+import com.udacity.jdnd.course3.critter.enums.PetType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

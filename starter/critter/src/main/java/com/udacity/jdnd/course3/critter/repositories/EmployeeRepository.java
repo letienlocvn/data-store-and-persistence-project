@@ -1,5 +1,6 @@
-package com.udacity.jdnd.course3.critter.user.employee;
+package com.udacity.jdnd.course3.critter.repositories;
 
+import com.udacity.jdnd.course3.critter.entities.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

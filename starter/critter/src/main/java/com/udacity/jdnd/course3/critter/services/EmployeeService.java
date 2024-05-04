@@ -1,6 +1,10 @@
-package com.udacity.jdnd.course3.critter.user.employee;
+package com.udacity.jdnd.course3.critter.services;
 
+import com.udacity.jdnd.course3.critter.dtos.EmployeeDTO;
+import com.udacity.jdnd.course3.critter.dtos.EmployeeRequestDTO;
+import com.udacity.jdnd.course3.critter.entities.Employee;
 import com.udacity.jdnd.course3.critter.exception.ResourceNotFoundException;
+import com.udacity.jdnd.course3.critter.repositories.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

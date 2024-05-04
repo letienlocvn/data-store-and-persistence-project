@@ -1,12 +1,13 @@
-package com.udacity.jdnd.course3.critter.schedule;
+package com.udacity.jdnd.course3.critter.services;
 
+import com.udacity.jdnd.course3.critter.dtos.ScheduleDTO;
+import com.udacity.jdnd.course3.critter.entities.Schedule;
 import com.udacity.jdnd.course3.critter.exception.ResourceNotFoundException;
-import com.udacity.jdnd.course3.critter.pet.Pet;
-import com.udacity.jdnd.course3.critter.pet.PetRepository;
-import com.udacity.jdnd.course3.critter.pet.PetService;
-import com.udacity.jdnd.course3.critter.user.employee.Employee;
-import com.udacity.jdnd.course3.critter.user.employee.EmployeeRepository;
-import com.udacity.jdnd.course3.critter.user.employee.EmployeeService;
+import com.udacity.jdnd.course3.critter.entities.Pet;
+import com.udacity.jdnd.course3.critter.repositories.PetRepository;
+import com.udacity.jdnd.course3.critter.repositories.ScheduleRepository;
+import com.udacity.jdnd.course3.critter.entities.Employee;
+import com.udacity.jdnd.course3.critter.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

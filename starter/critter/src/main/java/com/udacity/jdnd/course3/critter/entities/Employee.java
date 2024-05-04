@@ -1,7 +1,6 @@
-package com.udacity.jdnd.course3.critter.user.employee;
+package com.udacity.jdnd.course3.critter.entities;
 
-import com.udacity.jdnd.course3.critter.schedule.Schedule;
-import com.udacity.jdnd.course3.critter.user.User;
+import com.udacity.jdnd.course3.critter.enums.EmployeeSkill;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
