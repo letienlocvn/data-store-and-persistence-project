@@ -56,7 +56,8 @@ public class PetService {
     public PetDTO findPet(long petId) {
         Pet pet = petRepository.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet", "Id", petId));
-        return modelMapper.map(pet, PetDTO.class);
+
+        return mapToDTO(pet);
     }
 
     public List<Pet> findAllById(List<Long> petIds) {

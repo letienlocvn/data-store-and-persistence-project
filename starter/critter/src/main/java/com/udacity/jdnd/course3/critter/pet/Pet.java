@@ -1,6 +1,5 @@
 package com.udacity.jdnd.course3.critter.pet;
 
-import com.udacity.jdnd.course3.critter.schedule.Schedule;
 import com.udacity.jdnd.course3.critter.user.customer.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +14,7 @@ import java.time.LocalDate;
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Pet {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
