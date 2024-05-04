@@ -26,7 +26,7 @@ public class EmployeeService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public EmployeeDTO createNewEmployee(EmployeeDTO employeeDTO) {
+    public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
         Employee entityEmployee = mapToEntity(employeeDTO);
         return mapToDTO(employeeRepository.save(entityEmployee));
     }
@@ -56,14 +56,6 @@ public class EmployeeService {
         return employeesWithRightSkillConvertDTO;
     }
 
-    private EmployeeDTO mapToDTO(Employee employee) {
-        return modelMapper.map(employee, EmployeeDTO.class);
-    }
-
-    private Employee mapToEntity(EmployeeDTO employeeDTO) {
-        return modelMapper.map(employeeDTO, Employee.class);
-    }
-
     public EmployeeDTO findEmployee(long employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", employeeId));
@@ -72,5 +64,13 @@ public class EmployeeService {
 
     public List<Employee> findAllById(List<Long> employeeIds) {
         return employeeRepository.findAllById(employeeIds);
+    }
+
+    private EmployeeDTO mapToDTO(Employee employee) {
+        return modelMapper.map(employee, EmployeeDTO.class);
+    }
+
+    private Employee mapToEntity(EmployeeDTO employeeDTO) {
+        return modelMapper.map(employeeDTO, Employee.class);
     }
 }

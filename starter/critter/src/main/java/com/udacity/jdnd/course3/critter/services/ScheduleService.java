@@ -77,6 +77,12 @@ public class ScheduleService {
         return scheduleDTOS;
     }
 
+    public List<ScheduleDTO> getAllSchedules() {
+        List<Schedule> schedules = scheduleRepository.findAll();
+        return schedules.stream()
+                .map(this::mapToDTO).collect(Collectors.toList());
+    }
+
     private Schedule mapToEntity(ScheduleDTO scheduleDTO,
                                  List<Employee> employees,
                                  List<Pet> pets) {
@@ -99,12 +105,6 @@ public class ScheduleService {
         scheduleDTO.setDate(schedule.getDate());
 
         return scheduleDTO;
-    }
-
-    public List<ScheduleDTO> getAllSchedules() {
-        List<Schedule> schedules = scheduleRepository.findAll();
-        return schedules.stream()
-                .map(this::mapToDTO).collect(Collectors.toList());
     }
 
 

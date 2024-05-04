@@ -1,12 +1,11 @@
 package com.udacity.jdnd.course3.critter.services;
 
+import com.udacity.jdnd.course3.critter.dtos.PetDTO;
+import com.udacity.jdnd.course3.critter.entities.Customer;
 import com.udacity.jdnd.course3.critter.entities.Pet;
 import com.udacity.jdnd.course3.critter.exception.ResourceNotFoundException;
-import com.udacity.jdnd.course3.critter.dtos.PetDTO;
-import com.udacity.jdnd.course3.critter.repositories.PetRepository;
-import com.udacity.jdnd.course3.critter.entities.Customer;
 import com.udacity.jdnd.course3.critter.repositories.CustomerRepository;
-import org.modelmapper.ModelMapper;
+import com.udacity.jdnd.course3.critter.repositories.PetRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +24,6 @@ public class PetService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     public PetDTO createNewPet(PetDTO petDTO) {
 
         Customer customer = customerRepository.findById(petDTO.getOwnerId())
@@ -36,26 +32,6 @@ public class PetService {
         Pet petEntity = petRepository.save(pet);
         customerRepository.save(customer);
         return mapToDTO(petEntity);
-    }
-
-    private PetDTO mapToDTO(Pet pet) {
-        PetDTO petDTO = new PetDTO();
-        BeanUtils.copyProperties(pet, petDTO);
-        if (pet.getCustomer() != null) {
-            petDTO.setOwnerId(pet.getCustomer().getId());
-        }
-        return petDTO;
-    }
-
-    private Pet mapToEntity(PetDTO petDTO, Customer customer) {
-        Pet pet = new Pet();
-        pet.setType(petDTO.getType());
-        pet.setNotes(petDTO.getNotes());
-        pet.setName(petDTO.getName());
-        pet.setBirthDate(petDTO.getBirthDate());
-        pet.setCustomer(customer);
-        customer.savePet(pet);
-        return pet;
     }
 
     public PetDTO findPet(long petId) {
@@ -87,6 +63,26 @@ public class PetService {
             petDTOS.add(petDTO);
         });
         return petDTOS;
+    }
+
+    private PetDTO mapToDTO(Pet pet) {
+        PetDTO petDTO = new PetDTO();
+        BeanUtils.copyProperties(pet, petDTO);
+        if (pet.getCustomer() != null) {
+            petDTO.setOwnerId(pet.getCustomer().getId());
+        }
+        return petDTO;
+    }
+
+    private Pet mapToEntity(PetDTO petDTO, Customer customer) {
+        Pet pet = new Pet();
+        pet.setType(petDTO.getType());
+        pet.setNotes(petDTO.getNotes());
+        pet.setName(petDTO.getName());
+        pet.setBirthDate(petDTO.getBirthDate());
+        pet.setCustomer(customer);
+        customer.savePet(pet);
+        return pet;
     }
 
 

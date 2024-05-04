@@ -45,7 +45,7 @@ public class UserController {
 
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        return employeeService.createNewEmployee(employeeDTO);
+        return employeeService.createEmployee(employeeDTO);
     }
 
     @PostMapping("/employee/{employeeId}")
