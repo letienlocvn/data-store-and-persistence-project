@@ -34,8 +34,7 @@ public class CustomerService {
         }
         Customer customer = mapToEntity(customerDTO);
         customer.setPets(pets);
-        customerRepository.save(customer);
-        return mapToDTO(customer);
+        return mapToDTO(customerRepository.save((customer)));
     }
 
     public List<CustomerDTO> findAllCustomers() {

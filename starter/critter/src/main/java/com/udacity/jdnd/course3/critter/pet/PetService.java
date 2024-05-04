@@ -27,13 +27,10 @@ public class PetService {
 
         Customer customer = customerRepository.findById(petDTO.getOwnerId())
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "Id", petDTO.getOwnerId()));
-        Pet pet = mapToEntity(petDTO);
-
-        pet.setCustomer(customer);
-        customer.getPets().add(pet);
+        Pet pet = mapToEntity(petDTO, customer);
+        Pet petEntity = petRepository.save(pet);
         customerRepository.save(customer);
-
-        return mapToDTO(petRepository.save(pet));
+        return mapToDTO(petEntity);
     }
 
     private PetDTO mapToDTO(Pet pet) {
@@ -45,8 +42,15 @@ public class PetService {
         return petDTO;
     }
 
-    private Pet mapToEntity(PetDTO petDTO) {
-        return modelMapper.map(petDTO, Pet.class);
+    private Pet mapToEntity(PetDTO petDTO, Customer customer) {
+        Pet pet = new Pet();
+        pet.setType(petDTO.getType());
+        pet.setNotes(petDTO.getNotes());
+        pet.setName(petDTO.getName());
+        pet.setBirthDate(petDTO.getBirthDate());
+        pet.setCustomer(customer);
+        customer.savePet(pet);
+        return pet;
     }
 
     public PetDTO findPet(long petId) {

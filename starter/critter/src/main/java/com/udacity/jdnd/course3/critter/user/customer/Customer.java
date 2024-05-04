@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,5 +21,12 @@ public class Customer extends User {
     private String phoneNumber;
     private String notes;
     @OneToMany
-    private List<Pet> pets;
+    private List<Pet> pets = new ArrayList<>();
+
+    public void savePet(Pet pet) {
+        if (pets == null) {
+            pets = new ArrayList<>();
+        }
+        pets.add(pet);
+    }
 }
